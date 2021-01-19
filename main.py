@@ -1,16 +1,17 @@
 import sys
 from random import randint
 
-from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtCore import QPoint
 
+from UI import Ui_MainWindow
 
-class Circles(QMainWindow):
+
+class Circles(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('UI.ui', self)
+        self.setupUi(self)
         self.first_paint = False
         self.pushButton.clicked.connect(self.do_paint)
 
@@ -26,9 +27,10 @@ class Circles(QMainWindow):
         self.repaint()
 
     def create_circles(self, qp):
-        qp.setBrush(QColor(255, 255, 0))
         n = randint(1, 10)
         for i in range(n):
+            r, g, b = randint(0, 255), randint(0, 255), randint(0, 255)
+            qp.setBrush(QColor(r, g, b))
             d = randint(10, 300)
             r = d // 2
             x, y = randint(d, 800 - d), randint(d, 600 - d)
